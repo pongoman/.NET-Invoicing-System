@@ -351,3 +351,4 @@ MigrationBackup/
 
 # ignore a single file
 appsettings.Development.json
+/tests/FunctionalTests

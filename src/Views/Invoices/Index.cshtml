@@ -12,7 +12,7 @@
             data: { status: statusRadio.value, id: Id }
         }).done(function (response) {
             if (!response.success) {
-                //window.location.href = '@Url.Action("Index", "Invoices")';
+                window.location.href = '@Url.Action("Index", "Invoices")';
             }
         });
     }
