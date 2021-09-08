@@ -1,0 +1,88 @@
+﻿@model IEnumerable<InvoicingSystem.Models.Invoice>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(event) {
+            @foreach (var item in Model)
+            {
+                if (item.InvoiceStatus == "paid")
+                {
+                    @: document.getElementById('status-paid-' + @item.Id).checked = true;
+                }else
+                {
+                    @: document.getElementById('status-unpaid-' + @item.Id).checked = true;
+                }
+            }
+        });
+    </script>
+
+<table id="inv-table" class="table">
+    <thead>
+        <tr>
+            <th class="col-lg-3 col-md-3 col-xs-12">
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th class="col-lg-1 col-md-1 col-xs-12">
+                @Html.DisplayNameFor(model => model.InvoiceAmount)
+            </th>
+            <th class="col-lg-2 col-md-2 col-xs-12">
+                @Html.DisplayNameFor(model => model.InvoiceAmountPlusVat)
+            </th>
+            <th class="col-lg-1 col-md-1 col-xs-12">
+                @Html.DisplayNameFor(model => model.VatRate)
+            </th>
+            <th class="col-lg-1 col-md-1 col-xs-12">
+                @Html.DisplayNameFor(model => model.InvoiceStatus)
+            </th>
+            <th class="col-lg-2 col-md-2 col-xs-12">
+                @Html.DisplayNameFor(model => model.InvoiceDate)
+            </th>
+            <th class="col-lg-2 col-md-2 col-xs-12">
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceAmountPlusVat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VatRate)
+                </td>
+                <td id="status-@item.Id">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="statusRadios-@item.Id" id="status-paid-@item.Id" value="paid" onclick="setStatus(this, @item.Id)">
+                        <label class="form-check-label" for="status-paid-@item.Id">
+                            Paid
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="statusRadios-@item.Id" id="status-unpaid-@item.Id" value="unpaid" onclick="setStatus(this, @item.Id)">
+                        <label class="form-check-label" for="status-unpaid-@item.Id">
+                            Unpaid
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="ExportCustomerReport" asp-route-id="@item.Id">Customer Report</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
