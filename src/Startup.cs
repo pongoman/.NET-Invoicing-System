@@ -39,8 +39,6 @@ namespace InvoicingSystem
             services.AddDbContext<InvoicingSystemContext>(
                 dbContextOptions => dbContextOptions
                     .UseMySql(Configuration.GetConnectionString("InvoiceSystem"), serverVersion)
-                    .EnableSensitiveDataLogging() // <-- These two calls are optional but help
-                    .EnableDetailedErrors()       // <-- with debugging (remove for production).
             );
             services.AddControllersWithViews();
         }
